@@ -50,7 +50,10 @@ nav{
 }
 nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.5)}
 .nav-logo{display:flex;align-items:center;gap:12px}
-.nav-logo img{height:46px;width:auto;object-fit:contain}
+.nav-logo img{
+  height:46px;width:auto;object-fit:contain;
+  filter:drop-shadow(0 0 8px rgba(255,255,255,0.55)) drop-shadow(0 0 18px rgba(255,255,255,0.28));
+}
 .nav-links{display:flex;gap:30px;list-style:none;align-items:center}
 .nav-links a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s;font-weight:500}
 .nav-links a:hover{color:white}
@@ -103,6 +106,7 @@ nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.5)}
 .hero-content{
   position:relative;z-index:10;
   width:100%;padding:0 0 88px;
+  max-width:640px;
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
@@ -184,7 +188,55 @@ h1.hero-title em{font-style:italic;color:var(--amber-light)}
 .stat-n sup{color:var(--amber);font-size:.55em;vertical-align:super}
 .stat-l{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace}
 
-/* LOGOS STRIP */
+/* HERO VIDEO */
+.hero-video-wrap{
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:52%;
+  pointer-events:none;
+  z-index:1;
+}
+.hero-video-wrap video{
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:.65;
+}
+.hero-video-wrap::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to right,
+    var(--navy) 0%,
+    rgba(13,45,78,0.85) 22%,
+    rgba(13,45,78,0.35) 55%,
+    rgba(13,45,78,0.08) 100%
+  );
+  z-index:2;
+}
+.hero-video-wrap::after{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;left:0;
+  width:80px;
+  background:linear-gradient(to right, var(--navy), transparent);
+  z-index:3;
+}
+@media(max-width:900px){
+  .hero-video-wrap{
+    width:100%;
+    opacity:.3;
+  }
+  .hero-video-wrap::before{
+    background:linear-gradient(
+      to top,
+      var(--navy) 0%,
+      rgba(13,45,78,0.8) 30%,
+      rgba(13,45,78,0.4) 70%,
+      rgba(13,45,78,0.1) 100%
+    );
+  }
+}
 .logos-strip{
   padding:32px 0;background:rgba(13,45,78,.04);
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -646,7 +698,7 @@ footer{background:#060E1A;padding:60px 0 28px;border-top:1px solid rgba(255,255,
   display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px;
   padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:24px;
 }
-.footer-logo{height:52px;width:auto;object-fit:contain;margin-bottom:14px;filter:brightness(1.05)}
+.footer-logo{height:52px;width:auto;object-fit:contain;margin-bottom:14px;filter:brightness(1.05) drop-shadow(0 0 7px rgba(255,255,255,0.4)) drop-shadow(0 0 16px rgba(255,255,255,0.2))}
 .fbrand-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--amber-light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
 .fbrand-desc{font-size:13px;color:rgba(255,255,255,.25);line-height:1.65;max-width:230px;margin-bottom:20px}
 .fnorms{display:flex;flex-wrap:wrap;gap:5px}
@@ -736,6 +788,19 @@ footer{background:#060E1A;padding:60px 0 28px;border-top:1px solid rgba(255,255,
 <section class="hero" id="home">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
+
+  <!-- VÍDEO LATERAL (substitua o src pelo caminho do seu arquivo .webm) -->
+  <div class="hero-video-wrap">
+    <video
+      src="VIDEO__para_hero.webm"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    ></video>
+  </div>
   <div class="container">
     <div class="hero-content">
       <div class="hero-eyebrow">DV Projetos · Engenharia Térmica &amp; Mecânica</div>

@@ -52,7 +52,12 @@ nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.5)}
 .nav-logo{display:flex;align-items:center;gap:12px}
 .nav-logo img{
   height:46px;width:auto;object-fit:contain;
-  filter:drop-shadow(0 0 8px rgba(255,255,255,0.55)) drop-shadow(0 0 18px rgba(255,255,255,0.28));
+  filter:
+    drop-shadow(0 0 3px rgba(255,255,255,0.95))
+    drop-shadow(0 0 8px rgba(255,255,255,0.85))
+    drop-shadow(0 0 16px rgba(255,255,255,0.65))
+    drop-shadow(0 0 28px rgba(255,255,255,0.45))
+    drop-shadow(0 0 42px rgba(255,255,255,0.25));
 }
 .nav-links{display:flex;gap:30px;list-style:none;align-items:center}
 .nav-links a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s;font-weight:500}
@@ -699,7 +704,7 @@ footer{background:#060E1A;padding:60px 0 28px;border-top:1px solid rgba(255,255,
   display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px;
   padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:24px;
 }
-.footer-logo{height:52px;width:auto;object-fit:contain;margin-bottom:14px;filter:brightness(1.05) drop-shadow(0 0 7px rgba(255,255,255,0.4)) drop-shadow(0 0 16px rgba(255,255,255,0.2))}
+.footer-logo{height:52px;width:auto;object-fit:contain;margin-bottom:14px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(255,255,255,0.95)) drop-shadow(0 0 8px rgba(255,255,255,0.80)) drop-shadow(0 0 18px rgba(255,255,255,0.55)) drop-shadow(0 0 32px rgba(255,255,255,0.30))}
 .fbrand-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--amber-light);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
 .fbrand-desc{font-size:13px;color:rgba(255,255,255,.25);line-height:1.65;max-width:230px;margin-bottom:20px}
 .fnorms{display:flex;flex-wrap:wrap;gap:5px}

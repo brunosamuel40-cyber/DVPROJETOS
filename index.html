@@ -1,1 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exploded View — Trocador Casco e Tubos</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A0F16;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'IBM Plex Mono',monospace}
 
+.page{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:900px;padding:48px 32px}
+
+.eyebrow{font-size:10px;color:rgba(196,122,10,.7);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:rgba(196,122,10,.7)}
+
+h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);color:white;font-weight:400;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;text-align:left;width:100%}
+h1 em{font-style:italic;color:#E09020}
+
+.sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.7;max-width:480px;font-weight:300;margin-bottom:52px}
+
+/* ── CENA ── */
+.scene-wrap{
+  position:relative;width:100%;height:360px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:32px;
+}
+
+/* Grid bg */
+.scene-wrap::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:40px 40px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.05);
+}
+.glow-bg{
+  position:absolute;
+  width:600px;height:300px;
+  background:radial-gradient(ellipse,rgba(196,122,10,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ── COMPONENTES 3D ISOMÉTRICO ── */
+.hx{
+  position:relative;
+  width:580px;height:220px;
+  transform-style:preserve-3d;
+}
+
+/* cada peça */
+.part{
+  position:absolute;
+  transition:all 0s;
+}
+
+/* ── CASCO (corpo principal) ── */
+.p-shell{
+  left:80px;top:65px;
+  width:360px;height:90px;
+}
+.shell-face-front{
+  position:absolute;left:0;top:0;width:360px;height:90px;
+  background:linear-gradient(180deg,
+    #2A5F8F 0%,#1E4976 30%,#163A5C 50%,#1E4976 70%,#2A5F8F 100%);
+  border:1px solid rgba(255,255,255,.08);
+}
+.shell-face-front::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,.04) 60px);
+}
+/* top face */
+.shell-top{
+  position:absolute;left:0;top:-18px;width:360px;height:18px;
+  background:linear-gradient(180deg,#3A7ABF,#2A5F8F);
+  transform:skewX(45deg) skewY(0deg);
+  transform-origin:bottom left;
+  border:1px solid rgba(255,255,255,.1);
+}
+/* right face */
+.shell-right{
+  position:absolute;right:-18px;top:-18px;width:18px;height:108px;
+  background:linear-gradient(90deg,#1E4976,#0D2D4E);
+  transform:skewY(-45deg);
+  transform-origin:top left;
+  border:1px solid rgba(255,255,255,.04);
+}
+
+/* bocais */
+.nozzle{
+  position:absolute;
+  background:linear-gradient(180deg,#8B6020,#C47A0A,#8B6020);
+  border:1px solid rgba(255,255,255,.1);
+}
+.nozzle-a{width:22px;height:36px;left:90px;top:-36px}
+.nozzle-b{width:22px;height:36px;left:240px;top:-36px}
+.nozzle-c{width:22px;height:36px;left:90px;top:90px}
+.nozzle-d{width:22px;height:36px;left:240px;top:90px}
+
+/* flanges laterais no casco */
+.flange-strip{
+  position:absolute;top:0;
+  width:20px;height:90px;
+  background:linear-gradient(180deg,#B07830,#7A5018,#B07830);
+}
+.flange-strip.left{left:0}
+.flange-strip.right{right:0}
+
+/* ── FEIXE TUBULAR ── */
+.p-bundle{
+  left:100px;top:80px;
+  width:320px;height:60px;
+  display:flex;flex-direction:column;
+  gap:5px;padding:8px 4px;
+  position:absolute;
+}
+.tube-line{
+  height:5px;border-radius:3px;
+  background:linear-gradient(90deg,#7A5018 0%,#E09020 15%,#D4B060 50%,#E09020 85%,#7A5018 100%);
+  box-shadow:0 1px 4px rgba(0,0,0,.4);
+}
+
+/* ── CHICANAS ── */
+.p-baffle{
+  position:absolute;
+  width:6px;height:56px;
+  top:72px;
+  background:linear-gradient(180deg,#2A3F5C 0%,#1A2C42 50%,#2A3F5C 100%);
+  border:1px solid rgba(196,122,10,.35);
+  border-radius:1px;
+}
+.p-baffle::after{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 7px,rgba(196,122,10,.1) 8px);
+}
+.pb1{left:170px}
+.pb2{left:255px}
+.pb3{left:340px}
+
+/* ── ESPELHOS (tube sheets) ── */
+.p-ts{
+  position:absolute;top:60px;
+  width:22px;height:100px;
+  background:linear-gradient(90deg,#9A7030,#C49040,#9A7030);
+  border:1px solid rgba(255,255,255,.12);
+}
+.ts-left{left:78px}
+.ts-right{left:440px}
+
+/* ── CABEÇOTE TRASEIRO ── */
+.p-head-rear{
+  left:20px;top:55px;
+  width:58px;height:110px;
+  position:absolute;
+}
+.head-body{
+  position:absolute;right:0;top:10px;
+  width:40px;height:90px;
+  background:linear-gradient(90deg,#1E4976,#2A5F8F,#1E4976);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:3px 0 0 3px;
+}
+.head-flange{
+  position:absolute;right:0;top:0;
+  width:18px;height:110px;
+  background:linear-gradient(180deg,#B07830,#7A5018,#B07830);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* ── CABEÇOTE FRONTAL ── */
+.p-head-front{
+  left:462px;top:55px;
+  width:58px;height:110px;
+  position:absolute;
+}
+.head-body-f{
+  position:absolute;left:0;top:10px;
+  width:40px;height:90px;
+  background:linear-gradient(90deg,#1E4976,#2A5F8F,#1E4976);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:0 3px 3px 0;
+}
+.head-flange-f{
+  position:absolute;left:0;top:0;
+  width:18px;height:110px;
+  background:linear-gradient(180deg,#B07830,#7A5018,#B07830);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* ── LABELS FLUTUANTES ── */
+.label{
+  position:absolute;
+  font-size:9px;color:rgba(196,122,10,.8);
+  letter-spacing:.08em;text-transform:uppercase;
+  opacity:0;transition:opacity .5s;
+  white-space:nowrap;pointer-events:none;
+}
+.label-line{
+  position:absolute;background:rgba(196,122,10,.35);
+  width:1px;opacity:0;transition:opacity .5s;
+}
+
+/* ── ESTADO MONTADO ── */
+.hx.assembled .part{transition:all 1.4s cubic-bezier(.4,0,.2,1)}
+.hx.assembled .p-head-rear{left:20px;top:55px}
+.hx.assembled .p-shell{left:80px;top:65px}
+.hx.assembled .p-bundle{left:100px;top:80px}
+.hx.assembled .pb1{left:170px;top:72px}
+.hx.assembled .pb2{left:255px;top:72px}
+.hx.assembled .pb3{left:340px;top:72px}
+.hx.assembled .ts-left{left:78px}
+.hx.assembled .ts-right{left:440px}
+.hx.assembled .p-head-front{left:462px;top:55px}
+
+/* ── ESTADO EXPLODIDO ── */
+.hx.exploded .part{transition:all 1.5s cubic-bezier(.34,1.3,.64,1)}
+.hx.exploded .p-head-rear{left:-48px;top:55px}
+.hx.exploded .p-shell{left:80px;top:155px}
+.hx.exploded .p-bundle{left:100px;top:-55px}
+.hx.exploded .pb1{left:130px;top:145px}
+.hx.exploded .pb2{left:255px;top:-60px}
+.hx.exploded .pb3{left:380px;top:145px}
+.hx.exploded .ts-left{left:30px;top:60px}
+.hx.exploded .ts-right{left:510px;top:60px}
+.hx.exploded .p-head-front{left:538px;top:55px}
+
+/* labels visíveis quando explodido */
+.hx.exploded ~ .labels .label{opacity:1}
+.hx.exploded ~ .labels .label-line{opacity:1}
+
+/* ── DIMENSÕES TÉCNICAS ── */
+.dim-line{
+  position:absolute;
+  background:rgba(46,120,180,.4);
+  font-family:'IBM Plex Mono',monospace;
+  opacity:0;transition:opacity .6s .8s;
+}
+.hx.exploded ~ .dims{opacity:1}
+
+/* ── BOTÕES ── */
+.controls{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+}
+.ctrl-btn{
+  padding:10px 24px;border-radius:4px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;font-weight:500;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-explode{
+  background:rgba(196,122,10,.15);
+  border:1px solid rgba(196,122,10,.45);
+  color:#E09020;
+}
+.btn-explode:hover{background:rgba(196,122,10,.25);transform:translateY(-1px)}
+.btn-assemble{
+  background:rgba(30,73,118,.25);
+  border:1px solid rgba(30,73,118,.5);
+  color:rgba(255,255,255,.6);
+}
+.btn-assemble:hover{background:rgba(30,73,118,.4);transform:translateY(-1px)}
+.btn-loop{
+  background:rgba(40,100,40,.15);
+  border:1px solid rgba(60,180,60,.3);
+  color:rgba(100,220,100,.8);
+}
+.btn-loop:hover{background:rgba(40,100,40,.3);transform:translateY(-1px)}
+.btn-active{filter:brightness(1.3);box-shadow:0 0 16px rgba(196,122,10,.3)}
+
+/* ── SPEC TAGS ── */
+.spec-tags{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  margin-top:20px;
+}
+.stag{
+  font-size:9px;padding:4px 10px;border-radius:3px;
+  border:1px solid rgba(196,122,10,.2);
+  color:rgba(196,122,10,.6);letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ── TOOLTIP COMPONENTES ── */
+.tooltip-area{
+  position:absolute;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.tip-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(196,122,10,.8);
+  box-shadow:0 0 8px rgba(196,122,10,.5);
+  animation:tipPulse 2s ease-in-out infinite;
+  opacity:0;transition:opacity .4s;
+}
+@keyframes tipPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.4);opacity:1}}
+.hx.exploded ~ .tooltips .tip-dot{opacity:1}
+.tip-label{
+  position:absolute;left:16px;
+  background:rgba(13,45,78,.92);
+  border:1px solid rgba(196,122,10,.35);
+  border-radius:4px;padding:5px 10px;
+  font-size:9px;color:white;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+  backdrop-filter:blur(8px);
+}
+.tooltip-area:hover .tip-label{opacity:1}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div style="width:100%;margin-bottom:8px">
+    <div class="eyebrow">Engenharia Térmica de Alta Performance</div>
+    <h1>Trocador de Calor<br><em>Casco e Tubos</em></h1>
+    <p class="sub">Cada componente projetado com precisão. Simulação Térmica Avançada e Validação Mecânica Integrada conforme ASME VIII Div.1 e TEMA.</p>
+  </div>
+
+  <div class="scene-wrap">
+    <div class="glow-bg"></div>
+
+    <div class="hx" id="hx">
+      <!-- CABEÇOTE TRASEIRO -->
+      <div class="part p-head-rear">
+        <div class="head-body"></div>
+        <div class="head-flange"></div>
+      </div>
+
+      <!-- ESPELHO ESQUERDO -->
+      <div class="part p-ts ts-left"></div>
+
+      <!-- CASCO -->
+      <div class="part p-shell">
+        <div class="shell-face-front">
+          <div class="nozzle nozzle-a"></div>
+          <div class="nozzle nozzle-b"></div>
+          <div class="nozzle nozzle-c"></div>
+          <div class="nozzle nozzle-d"></div>
+          <div class="flange-strip left"></div>
+          <div class="flange-strip right"></div>
+        </div>
+        <div class="shell-top"></div>
+        <div class="shell-right"></div>
+      </div>
+
+      <!-- CHICANAS -->
+      <div class="part p-baffle pb1"></div>
+      <div class="part p-baffle pb2"></div>
+      <div class="part p-baffle pb3"></div>
+
+      <!-- FEIXE TUBULAR -->
+      <div class="part p-bundle">
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+        <div class="tube-line"></div>
+      </div>
+
+      <!-- ESPELHO DIREITO -->
+      <div class="part p-ts ts-right"></div>
+
+      <!-- CABEÇOTE FRONTAL -->
+      <div class="part p-head-front">
+        <div class="head-body-f"></div>
+        <div class="head-flange-f"></div>
+      </div>
+    </div>
+
+    <!-- Tooltip dots (aparecem quando explodido) -->
+    <div class="tooltips" style="position:absolute;inset:0;pointer-events:none">
+      <div class="tooltip-area" style="left:50px;top:100px;pointer-events:auto">
+        <div class="tip-dot"></div>
+        <div class="tip-label">Cabeçote Traseiro</div>
+      </div>
+      <div class="tooltip-area" style="left:185px;top:60px;pointer-events:auto">
+        <div class="tip-dot"></div>
+        <div class="tip-label">Feixe Tubular</div>
+      </div>
+      <div class="tooltip-area" style="left:280px;top:230px;pointer-events:auto">
+        <div class="tip-dot"></div>
+        <div class="tip-label">Casco Principal</div>
+      </div>
+      <div class="tooltip-area" style="left:145px;top:185px;pointer-events:auto">
+        <div class="tip-dot"></div>
+        <div class="tip-label">Chicana</div>
+      </div>
+      <div class="tooltip-area" style="left:475px;top:100px;pointer-events:auto">
+        <div class="tip-dot"></div>
+        <div class="tip-label">Cabeçote Frontal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn btn-explode" id="btnExp" onclick="explode()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M4 6h4M6 4l2 2-2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Explodir Componentes
+    </button>
+    <button class="ctrl-btn btn-assemble" id="btnAss" onclick="assemble()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 6H4M6 4l-2 2 2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Montar Equipamento
+    </button>
+    <button class="ctrl-btn btn-loop" id="btnLoop" onclick="toggleLoop()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6a4 4 0 004 4 4 4 0 004-4 4 4 0 00-4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Loop Automático
+    </button>
+  </div>
+
+  <div class="spec-tags">
+    <span class="stag">Casco</span>
+    <span class="stag">Feixe Tubular</span>
+    <span class="stag">Chicanas</span>
+    <span class="stag">Espelhos</span>
+    <span class="stag">Cabeçotes</span>
+    <span class="stag">Bocais de Processo</span>
+  </div>
+
+  <div style="margin-top:40px;padding:20px 24px;background:rgba(196,122,10,.06);border:1px solid rgba(196,122,10,.15);border-radius:8px;width:100%;max-width:640px">
+    <div style="font-size:10px;color:rgba(196,122,10,.7);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">
+      // Como usar essa animação no hero do site
+    </div>
+    <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.8">
+      <span style="color:rgba(255,255,255,.7);font-weight:500">Opção A — CSS/JS puro (este arquivo):</span> leve, sem vídeo, embed direto no HTML.<br>
+      <span style="color:rgba(255,255,255,.7);font-weight:500">Opção B — WebM gerado no Runway/Kling:</span> vídeo com autoplay muted loop, posicionado absoluto no hero, opacity .85.<br>
+      <span style="color:rgba(255,255,255,.7);font-weight:500">Opção C — Spline 3D:</span> model interativo, usuário rotaciona com o mouse — máxima sofisticação.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const hx = document.getElementById('hx');
+let looping = false, lt = null;
+
+function explode(){
+  hx.classList.add('assembled');
+  void hx.offsetWidth;
+  hx.classList.add('exploded');
+  hx.classList.remove('assembled');
+  document.getElementById('btnExp').classList.add('btn-active');
+  document.getElementById('btnAss').classList.remove('btn-active');
+}
+function assemble(){
+  hx.classList.add('assembled');
+  hx.classList.remove('exploded');
+  document.getElementById('btnAss').classList.add('btn-active');
+  document.getElementById('btnExp').classList.remove('btn-active');
+}
+function toggleLoop(){
+  const btn = document.getElementById('btnLoop');
+  if(looping){
+    looping=false; clearTimeout(lt);
+    btn.textContent='∞ Loop Automático';
+    btn.classList.remove('btn-active');
+    return;
+  }
+  looping=true;
+  btn.innerHTML='■ Parar Loop';
+  btn.classList.add('btn-active');
+  function cycle(){
+    explode();
+    lt = setTimeout(()=>{
+      assemble();
+      lt = setTimeout(()=>{ if(looping) cycle(); }, 2000);
+    }, 2800);
+  }
+  cycle();
+}
+
+// Auto-start loop after 1s
+setTimeout(toggleLoop, 800);
+</script>
+</body>
+</html>

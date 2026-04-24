@@ -45,7 +45,7 @@ nav{
 }
 nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.55)}
 .nav-logo{display:flex;align-items:center}
-.nav-logo img{height:50px;width:auto;object-fit:contain;filter:drop-shadow(0 0 8px rgba(255,255,255,.95)) drop-shadow(0 0 18px rgba(255,255,255,.8)) drop-shadow(0 0 36px rgba(255,255,255,.5)) drop-shadow(0 0 54px rgba(255,255,255,.25))}
+.nav-logo img{height:50px;width:auto;object-fit:contain;filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px rgba(255,255,255,.98)) drop-shadow(0 0 22px rgba(255,255,255,.85)) drop-shadow(0 0 44px rgba(255,255,255,.55)) drop-shadow(0 0 70px rgba(255,255,255,.3))}
 .nav-links{display:flex;gap:30px;list-style:none;align-items:center}
 .nav-links a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:color .2s;font-weight:500}
 .nav-links a:hover{color:white}
@@ -79,13 +79,15 @@ nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.55)}
   background:var(--navy);
   display:flex;align-items:center;
   overflow:hidden;
+  padding-left:48px;
+  padding-right:0;
 }
 
 /* Vídeo — metade direita com fade gradiente */
 .hero-video-wrap{
   position:absolute;
   right:0;top:0;bottom:0;
-  width:58%;
+  width:65%;
   pointer-events:none;
   z-index:1;
 }
@@ -102,10 +104,11 @@ nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.55)}
   background:linear-gradient(
     to right,
     var(--navy) 0%,
-    rgba(13,45,78,.92) 12%,
-    rgba(13,45,78,.55) 32%,
-    rgba(13,45,78,.15) 58%,
-    rgba(13,45,78,.0) 80%
+    var(--navy) 8%,
+    rgba(13,45,78,.96) 18%,
+    rgba(13,45,78,.6) 38%,
+    rgba(13,45,78,.1) 60%,
+    rgba(13,45,78,.0) 78%
   );
   z-index:2;
 }
@@ -137,11 +140,15 @@ nav.scrolled{box-shadow:0 4px 32px rgba(7,24,43,.55)}
 }
 
 /* Conteúdo hero — lado esquerdo */
+
+.hero-inner{width:100%;position:relative;z-index:10;}
 .hero-content{
   position:relative;z-index:10;
-  max-width:580px;
+  width:100%;
+  max-width:560px;
   padding:100px 0 80px;
   margin-left:0;
+  margin-right:auto;
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
@@ -250,8 +257,8 @@ h1.hero-title em{font-style:italic;color:var(--amber-light)}
 .logos-inner{display:flex;align-items:center;flex-wrap:wrap;gap:16px}
 .logos-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted-light);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;padding-right:32px;border-right:1px solid var(--border);margin-right:32px;flex-shrink:0}
 .logos-list{display:flex;gap:36px;flex-wrap:wrap;align-items:center}
-.litem{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(75,85,99,.55);letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:color .2s}
-.litem:hover{color:var(--navy)}
+.litem{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#111827;letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:color .2s}
+.litem:hover{color:#000}
 
 /* SECTION BASE */
 section.sec{padding:96px 0;position:relative}
@@ -505,7 +512,7 @@ footer{background:#060E1A;padding:56px 0 26px;border-top:1px solid rgba(255,255,
     <div class="scroll-arrow"></div>
   </div>
 
-  <div class="container">
+  <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow">DV Projetos · Engenharia Térmica &amp; Mecânica</div>
       <h1 class="hero-title">
